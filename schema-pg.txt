@@ -9,7 +9,7 @@ CREATE TABLE bookings (
       user_id varchar(10) NOT NULL,
       host_id varchar(10) NOT NULL
 );
-CREATE TABLE host (
+CREATE TABLE hosts (
       id varchar(10) NOT NULL PRIMARY KEY,
       password varchar(10) NOT NULL,
       first_name varchar(20) NOT NULL,
