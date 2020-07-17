@@ -1,0 +1,68 @@
+        <%- contentFor('body') %>
+        
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 confirm-booking">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-12 order-lg-1 order-2">
+                                <h2 class="pb-4">Confirm Booking</h2>
+
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <b>Booking Period: </b> 
+                                            </td>
+                                            <td class="text-right">
+                                                <%= query.checkin +' to '+ query.checkout %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                $<%= property.price +' x '+ bookings.duration + ' nights' %>
+                                            </td>
+                                            <td class="text-right">
+                                                $<%= bookings.totalAmount %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b>Total</b>
+                                            </td>
+                                            <td class="text-right">
+                                                <b>$<%= bookings.totalAmount %></b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p class="text-right">*Reserve now and pay later at property</p>
+                                <form method="post" class="bt">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="propertyId" value="<%= property.id %>">
+                                    <input type="hidden" name="startDate" value="<%= query.checkin %>">
+                                    <input type="hidden" name="endDate" value="<%= query.checkout %>">
+                                    <input type="hidden" name="totalAmount" value="<%= bookings.totalAmount %>">
+                                    <input type="hidden" name="hostId" value="<%= property.host_id %>">
+                                    <button class="btn btn-primary text-white float-right" type="submit" <%= (findBooking === true) ? 'disabled' : ''; %>>
+                                        Confirm Booking
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 order-lg-2 order-1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="/property/<%= property.id %>">
+                                            <%- include('partials/sidebar') %>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>    
+        </div>        

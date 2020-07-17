@@ -1,0 +1,63 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12 property-manage">
+                        <a href="/manage-property/add" role="button">
+                            <button class="btn btn-primary text-white float-right">Add property</button>
+                        </a>
+                        <h2 class="pb-3 bb">Manage Property</h2>
+                        
+                        <% if(typeof propertyList !== 'undefined' && propertyList !== null){ %>  
+                        <table class="table propertyList">
+                            <thead>
+                                <tr>
+                                    <th class="hidden-xs">Photo</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th class="hidden-xs">Location</th>
+                                    <th class="hidden-xs">Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% propertyList.forEach(property=>{ %>
+                                <tr>
+                                    <% property.property_photo = JSON.parse(property.property_photo); %>
+                                    <td class="td-image hidden-xs" style="background: url(images/propertyPhoto/<%= property.property_photo[0] %>)">
+                                    <td><%= property.id %></td>
+                                    <td class="w-25 name">
+                                        <a href="/property/<%= property.id %>"><%= property.name %></a>
+                                    </td>
+                                    <td class="hidden-xs"><%= property.address %>, <%= property.city %>, <%= property.country %></td>
+                                    <td class="hidden-xs">$<%= property.price %></td>
+                                    <td>
+                                        <a href="/manage-property/<%= property.id %>/edit">
+                                            <button name="edit" value="edit" class="btn btn-warning d-block d-xl-inline-block" data-toggle="tooltip" data-placement="bottom" title="Edit property" type="button">
+                                                <span class="icon-mode_edit"></span>
+                                            </button>    
+                                        </a>
+                                        <form class="d-inline-block" method="post" action="/manage-property/<%= property.id %>">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button name="delete" value="delete" class="btn btn-danger d-block d-xl-inline-block" data-toggle="tooltip" data-placement="bottom" title="Delete property" type="submit">
+                                                <span class="icon-close2"></span>
+                                            </button>
+                                            <button name="promote" value="promote" class="btn btn-success d-block d-xl-inline-block" data-toggle="tooltip" data-placement="bottom" title="Promote property" type="submit">
+                                                <span class="icon-bullhorn"></span>
+                                            </button> 
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                        <h5>No property listed!</h5>
+                        <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>

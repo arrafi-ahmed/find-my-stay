@@ -1,0 +1,95 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container">
+               <div class="row b">
+                  <div class="col-md-11 mx-auto my-3 invoice-view">
+                     
+                     <div class="row">
+                         <div class="col-md-12 clearfix bb">
+                             <div class="float-left float-none-sm">
+                                 <h3><span class="icon-home"></span> <%= siteName %></h3>
+                                 <h5>#Invoice <%= invoice.invoiceId %></h5>
+                             </div>
+                             <div class="float-right float-none-sm">
+                                 <b>Booking ID:</b> <%= invoice.bookId %><br>
+                                 <b>Date:</b> <%= invoice.currentDate %>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-md-12 pt-2 pb-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                     <h5 class="pt-2">Bill From:</h5><b>Property ID:</b> <%= invoice.propertyId %><br>
+                                     <b>Name:</b> <%= invoice.propertyName %><br>
+                                     <b>Address:</b> <%= invoice.propertyAddress %><br>
+                                     <%= invoice.propertyCity %>, <%= invoice.propertyCountry %><br>
+                                     <b>Phone:</b> <%= invoice.hostPhone %><br>
+                                     <b>Email:</b> <%= invoice.hostEmail %><br>
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                     <h5 class="pt-2">Bill To:</h5><b>User ID:</b> <%= invoice.userId %><br>
+                                     <b>Name:</b> <%= invoice.userName %><br>
+                                     <b>Address:</b> <%= invoice.userAddress %><br>
+                                     <%= invoice.userCity %>, <%= invoice.userCountry %><br>
+                                     <b>Phone:</b> <%= invoice.userPhone %><br>
+                                     <b>Email:</b> <%= invoice.userEmail %><br>
+                                     
+                                </div>
+                            </div>
+                         </div>
+                     </div>
+                     <table class="table">
+                         <thead>
+                             <tr>
+                                 <th>#</th>
+                                 <th>Property</th>
+                                 <th class="hidden-xs">Unit cost</th>
+                                 <th class="hidden-xs">Booking period</th>
+                                 <th class="hidden-xs">Qty</th>
+                                 <th class="text-right">Amount</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <td>1</td>
+                                 <td><%= invoice.propertyName %></td>
+                                 <td class="hidden-xs">$ <%= invoice.price %></td>
+                                 <td class="hidden-xs"><%= invoice.startDate %> to <%= invoice.endDate %></td>
+                                 <td class="hidden-xs"><%= invoice.duration %></td>
+                                 <td class="text-right">$ <%= invoice.totalAmount %></td>
+                             </tr>
+                             <tr>
+                                 <td></td>
+                                 <td></td>
+                                 <td class="hidden-xs"></td>
+                                 <td class="hidden-xs"></td>
+                                 <td class="hidden-xs"></td>
+                                 <td class="text-right"><b>Tax:</b> N/A</td>
+                             </tr>
+                             <tr>
+                                 <td></td>
+                                 <td></td>
+                                 <td class="hidden-xs"></td>
+                                 <td class="hidden-xs"></td>
+                                 <td class="hidden-xs"></td>
+                                 <td class="text-right"><b>Total:</b> $ <%= invoice.totalAmount %></td>
+                             </tr>
+                         </tbody>
+                     </table>
+                     <div class="row">
+                         <div class="col-md-12 clearfix py-2 pb-2 invoiceDownload">
+                             <div class="float-right">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button onclick="window.print()" name="download" value="download" class="btn btn-primary" type="submit">Download</button>
+                             </div>
+                         </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>

@@ -1,0 +1,171 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+	        <div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+
+							<div class="col-lg-3 col-md-4">
+								<!-- sidebar -->
+								<div class="row">
+									<div class="col-lg-10 col-md-12">
+										<img class="img-fluid img-thumbnail rounded" src="/images/profilePhoto/<%= role %>/<%= photo %>">
+									</div>
+								</div>
+								
+								<div class="bg-light mt-2">
+									<div class="px-3 py-2 bb">
+										<h5><%= name %></h5>
+										<h6 class="text-muted">@<%= username %></h6>
+									</div>
+									
+									<nav class="nav flex-column">
+									  	<a class="nav-link<%= path == '/' + role +'/' + username ? ' active' : '' %>" href="/<%= role %>/<%= username %>">Profile</a>
+									  	<a class="nav-link<%= path == '/' + role +'/' + username + '/edit' ? ' active' : '' %>" href="/<%= role %>/<%= username %>/edit">Edit Profile</a>
+									  	<a class="nav-link<%= path == '/' + role +'/' + username + '/data' ? ' active' : '' %>" href="/<%= role %>/<%= username %>/data">Account Data</a>
+									</nav>
+								</div>
+							</div>
+
+							<div class="col-lg-9 col-md-8 account">
+								<!-- profile -->
+								<% if(typeof profile !== 'undefined' && profile !== null){ %>
+								<h3 class="pt-2 pb-3 ">Profile</h3>
+								<table class="table">
+								    <tbody>
+								        <tr>
+								            <td><b>Username</b></td>
+								            <td><%= profile.id %></td>
+								        </tr>
+								        <tr>
+								            <td><b>Name</b></td>
+								            <td><%= profile.first_name %> <%= profile.last_name %></td>
+								        </tr>
+								        <tr>
+								            <td><b>Gender</b></td>
+								            <td><%= profile.gender == 0 ? 'Male' : 'Female' %></td>
+								        </tr>
+								        <tr>
+								            <td><b>Date of Birth</b></td>
+								            <td><%= profile.cdob %></td>
+								        </tr>
+								        <tr>
+								            <td><b>Email</b></td>
+								            <td><%= profile.email %></td>
+								        </tr>
+								        <tr>
+								            <td><b>Phone</b></td>
+								            <td><%= profile.phone %></td>
+								        </tr>
+								        <tr>
+								            <td><b>About You</b></td>
+								            <td><%= profile.about %></td>
+								        </tr>
+							        </tbody>
+								</table>
+								
+								<!-- edit profile -->
+								<% } else if(typeof profileEdit !== 'undefined' && profileEdit !== null){ %>
+								<form method="post" enctype="multipart/form-data">
+									<h3 class="pt-2 pb-3">Edit Profile</h3>
+									<table class="table">
+									    <tbody>
+									    	<tr>
+									            <td><b>Username</b></td>
+									            <td><input name="id" value="<%= profileEdit.id %>" class="form-control" type="text" readonly required></td>
+									        </tr>
+									        <tr>
+									            <td><b>Password</b></td>
+									            <td><input name="password" value="<%= profileEdit.password %>" class="form-control" type="password" required></td>
+									        </tr>
+									        <tr>
+									            <td><b>Name</b></td>
+									            <td>
+									            	<input name="firstName" value="<%= profileEdit.first_name %>" placeholder="First Name" class="form-control" type="text" required> 
+									            	<input name="lastName" value="<%= profileEdit.last_name %>" placeholder="Last Name" class="form-control" type="text" required>
+									            </td>
+									        </tr>
+									        <tr>
+									            <td><b>Gender</b></td>
+									            <td>
+									            	<% var male; var female; profileEdit.gender == 0 ? male = 'selected' :  female = 'selected' %>
+									            	<select class="form-control" name="gender" required>
+	                                                    <option value="0" <%= male %>>Male</option>
+	                                                    <option value="1" <%= female %>>Female</option>
+	                                                </select>
+									            </td>
+									        </tr>
+									        <tr>
+									            <td><b>Date of Birth</b></td>
+									            <td><input name="dob" value="<%= profileEdit.dob %>" class="form-control datepicker px-2" type="text" required></td>
+									        </tr>
+									        <tr>
+									            <td><b>Email</b></td>
+									            <td><input name="email" value="<%= profileEdit.email %>" class="form-control" type="email" required></td>
+									        </tr>
+									        <tr>
+									            <td><b>Phone</b></td>
+									            <td><input name="phone" value="<%= profileEdit.phone %>" class="form-control" type="text" required></td>
+									        </tr>
+									        <tr>
+									            <td><b>About</b></td>
+									            <td><textarea name="about" class="form-control" type="text" required><%= profileEdit.about %></textarea></td>
+								            </tr>
+								            <tr>
+									            <td><b>Profile Photo</b></td>
+									            <td class="custom-file">
+												  	<input name="profilePhoto" type="file" class="custom-file-input">
+												  	<input name="oldPhoto" value="<%= photo %>" type="hidden">
+												  	<label class="custom-file-label mx-2" for="customFile">Choose Photo</label>
+												</td>
+									        </tr>
+								        </tbody>
+									</table>
+
+									<div class="bt">
+										<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+							        	<button type="submit" class="btn btn-primary float-right">Update</button>	
+									</div>
+									
+						    	</form>
+
+								<!-- account data -->
+								<% } else if(typeof getStat !== 'undefined' && getStat !== null){ %>
+								<h3 class="pt-2 pb-4 bb">Account Data</h3>
+								<div class="row pt-3 text-center account-data">
+									<div class="col-md-4 col-sm-6 item py-5">
+										<h2><span class="icon-building-o"></span> <%= getStat.prop %></h2>
+										<h5>Listed Property</h5>
+									</div>
+									<div class="col-md-4 col-sm-6 item py-5">
+										<h2><span class="icon-dollar"></span> <%= getStat.earn %></h2>
+										<h5>Recieved Earning</h5>
+									</div>
+									<div class="col-md-4 col-sm-6 item py-5">
+										<h2><span class="icon-rate_review"></span> <%= getStat.review %></h2>
+										<h5>Recieved Reviews</h5>
+									</div>
+									<div class="col-md-4 col-sm-6 item py-5">
+										<h2><span class="icon-file-o"></span> <%= getStat.recievedBook %></h2>
+										<h5>Recieved Booking</h5>
+									</div>
+									<div class="col-md-4 col-sm-6 item py-5">
+										<h2><span class="icon-check_box"></span> <%= getStat.approvedBook %></h2>
+										<h5>Approved Booking</h5>
+									</div>
+									<div class="col-md-4 col-sm-6 item py-5">
+										<h2><span class="icon-money"></span> <%= getStat.paidBook %></h2>
+										<h5>Paid Booking</h5>
+									</div>
+								</div>
+								<% } else { %>
+								<p>No data found!</p>
+								<% } %>
+							</div>
+
+						</div>
+					</div>
+				</div>			
+			</div>	
+        </div>      

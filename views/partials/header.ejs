@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= siteName %> <%= title!=null?'| ' + title : '' %></title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700" rel="stylesheet">
+    <link href="/fonts/icomoon/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="/css/style.min.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+    <header class="site-navbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="site-navbar navbar navbar-expand-lg">
+                        <h2><a class="navbar-brand" href="<%= baseUrl %>">
+                            <span class="icon-home"></span> <%= siteName %>
+                        </a></h2>
+
+                        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+                        
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <% if(role == 'user'){ %>
+                                    <%- include('menu-nav-user') %>
+                                <% } else if(role == 'host'){ %>
+                                    <%- include('menu-nav-host') %>
+                                <% } else{ %>
+                                    <%- include('menu-nav-general') %>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>  
+    </header>      

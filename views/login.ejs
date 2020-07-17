@@ -1,0 +1,81 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 login">
+                        <div class="row">
+                            <div class="col-md-6 pt-2 image">
+                                <img class="img-fluid" src="images/hero_bg_2.jpg">
+                            </div>
+                            <div class="col-md-6 title">
+                                <h2 class="pb-2">Find Your Next Stay / Be a Host!</h2>
+                                <form method="post" class="compact-label">
+                                    <div class="form-group">
+                                        <label>Username</label> 
+                                        <input class="form-control" name="id" placeholder="Username" type="text" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label> 
+                                        <input class="form-control" name="password" placeholder="Password" type="password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Role</label> 
+                                        <select class="form-control" name="role" required>
+                                            <option value="user">User</option>
+                                            <option value="host">Host</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn btn-primary btn-block" type="submit">Login</button>
+                                    </div>
+
+                                    <span class="d-block text-center">No account? 
+                                        <span class="h6">
+                                            <% if(typeof booking !== 'undefined'){ %>
+                                                <a href="/register?redirect=<%= booking.redirect %>&propertyId=<%= booking.propertyId %>&checkin=<%= booking.checkin %>&checkout=<%= booking.checkout %>">Register</a>
+                                            <% }else{ %>
+                                                <a href="/register">Register</a>
+                                            <% } %>
+                                        </span> now!
+
+                                        <a class="demo" data-toggle="modal" href="#modal-container" id="modal">
+                                            <div class="hidden-xs d-inline-block">|</div><span class="h6"> Demo Account</span>
+                                        </a>
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- new message modal -->
+                        <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="modal-container" role="dialog">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="myModalLabel">Demo Credentials</h5>
+                                        <button class="close" data-dismiss="modal" type="button" onclick = "$('.modal').hide()"><span aria-hidden="true">×</span></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>
+                                            <b>Demo User:</b><br>
+                                            <span>ID: u-chris</span><br>
+                                            <span>PASSWORD: aA111</span>
+                                        </p> 
+                                        <p>
+                                            <b>Demo Host:</b><br>
+                                            <span>ID: h-angelina</span><br>
+                                            <span>PASSWORD: aA111</span>
+                                        </p> 
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>    

@@ -1,0 +1,82 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 property-edit">
+                        <h2>Modify Property</h2>
+                        <form method="post" enctype="multipart/form-data" class="row">
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputEmail1">ID</label> 
+                                <input class="form-control" id="exampleInputEmail1" type="text" name="propertyId" value="<%= property.id %>" readonly>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputEmail1">Price (USD)</label> 
+                                <input class="form-control" id="exampleInputEmail1" type="form-control-file" name="price" value="<%= property.price%>">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="exampleInputEmail1">Type</label>
+                                <div class="dropdown">
+                                    <select class="custom-select" name="type">
+                                        <% if(property.type == 1) { %>
+                                            <option value="1" selected>Entire place</option>
+                                            <option value="2" >Private room</option>
+                                        <% }else{ %>
+                                            <option value="1" >Entire place</option>
+                                            <option value="2" selected>Private room</option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="exampleInputEmail1">Name</label> 
+                                <input class="form-control" id="exampleInputEmail1" type="text" name="name" value="<%= property.name %>">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="exampleInputEmail1">Description</label> 
+                                <textarea class="form-control" id="exampleInputEmail1" type="text" name="description"><%= property.details %></textarea>
+                            </div>
+                            
+                            <div class="form-group col-md-12">
+                                <label for="exampleInputEmail1">Street Address</label> 
+                                <input class="form-control" id="exampleInputEmail1" type="text" name="address" value="<%= property.address %>">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputEmail1">City</label> 
+                                <input class="form-control" id="exampleInputEmail1" type="text" name="city" value="<%= property.city%>">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputEmail1">Country</label> 
+                                <input class="form-control" id="exampleInputEmail1" type="text" name="country" value="<%= property.country %>">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Property Images</label> <br>
+                                <small>* Upload minimum 3 images</small><br>
+                                <small>* Image ratio must be 3:1 (Width x Height)</small><br>
+                                <div class="row pt-3">
+                                    <% if(property.property_photo != null) { %>
+                                        <% property.property_photo = JSON.parse(property.property_photo); %>
+                                        <% var photoCount = 6; var left = photoCount - (property.property_photo.length); %>
+                                        <% for(var i=0; i<property.property_photo.length; i++){ %>
+                                            <div class="col-md-2">
+                                                <img class="img-fluid img-thumbnail" src="/images/propertyPhoto/<%= property.property_photo[i] %>">
+                                                <input class="form-control" type="hidden" name="oldPhoto" value="<%= property.property_photo[i] %>">
+                                            </div>
+                                        <% } %>
+                                        <% for(var i=0; i<left; i++){ %>
+                                            <div class="col-md-2">
+                                                <input class="form-control-file" type="file" name="propertyPhoto">
+                                            </div>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="w-100 bt">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button class="btn btn-primary float-right" value="update" type="submit">Update</button> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+        </div>

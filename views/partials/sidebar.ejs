@@ -1,0 +1,14 @@
+<div class="sidebar">
+	<% property.property_photo = JSON.parse(property.property_photo); %>
+	<img alt="Ad" class="img-fluid img-thumbnail" src="/images/propertyPhoto/<%= property.property_photo[0] %>">
+	
+	<div class="pl-1">
+		<b><%= property.name; %></b><br>
+		<span class="inline-small"> <%= property.type == 1 ? "Entire Place" : "Private Room"; %></span><br>
+		<span class="inline-small"><%= property.city; %>, <%= property.country; %></span><br>
+		<span class="inline-small"><b>$<%= property.price; %></b> / night </span>
+		<span class="inline-dot" area-hidden="true">.</span>
+		<span class="icon-star"></span>&nbsp;<span class="inline-small"><b><%= property.rating != null ? property.rating : "N/A"; %></b></span>
+		<span class="inline-small"><%= property.rating != null ? "(" + property.rating_count + ")" : ""; %></span>	
+	</div>	
+</div>

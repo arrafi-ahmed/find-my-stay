@@ -1,0 +1,79 @@
+CREATE TABLE bookings (
+      id SERIAL PRIMARY KEY,
+      property_id int NOT NULL,
+      total_amount int NOT NULL,
+      booking_date timestamp NOT NULL DEFAULT current_timestamp,
+      start_date date NOT NULL,
+      end_date date NOT NULL,
+      status smallint DEFAULT NULL,
+      user_id varchar(10) NOT NULL,
+      host_id varchar(10) NOT NULL
+);
+CREATE TABLE host (
+      id varchar(10) NOT NULL PRIMARY KEY,
+      password varchar(10) NOT NULL,
+      first_name varchar(20) NOT NULL,
+      last_name varchar(20) NOT NULL,
+      gender smallint NOT NULL,
+      dob date NOT NULL,
+      email varchar(20) NOT NULL,
+      phone varchar(20) NOT NULL,
+      profile_photo varchar(50) NOT NULL,
+      about text NOT NULL,
+      rating float DEFAULT NULL,
+      rating_count int DEFAULT NULL
+);
+CREATE TABLE invoice (
+      id SERIAL PRIMARY KEY,
+      book_id int NOT NULL,
+      amount int NOT NULL,
+      user_id varchar(10) NOT NULL,
+      host_id varchar(10) NOT NULL,
+      time timestamp NOT NULL DEFAULT current_timestamp
+);
+CREATE TABLE message (
+      id SERIAL PRIMARY KEY,
+      receiver varchar(20) NOT NULL,
+      sender varchar(20) NOT NULL,
+      content varchar(2000) NOT NULL,
+      time timestamp NOT NULL DEFAULT current_timestamp,
+      is_invoice smallint DEFAULT NULL
+);
+CREATE TABLE property (
+      id SERIAL PRIMARY KEY,
+      name varchar(50) NOT NULL,
+      type varchar NOT NULL,
+      price int NOT NULL,
+      address varchar(200) NOT NULL,
+      city varchar(50) NOT NULL,
+      country varchar(50) NOT NULL,
+      rating float DEFAULT NULL,
+      rating_count int DEFAULT NULL,
+      details text NOT NULL,
+      promote_status smallint NOT NULL,
+      property_photo varchar(500) DEFAULT NULL,
+      host_id varchar(10) NOT NULL
+);
+CREATE TABLE review (
+      id SERIAL PRIMARY KEY,
+      user_id varchar(10) NOT NULL,
+      property_id int NOT NULL,
+      rating smallint NOT NULL,
+      details text NOT NULL,
+      reply varchar(1000) DEFAULT NULL,
+      date date NOT NULL
+);      
+CREATE TABLE users (
+      id varchar(10) NOT NULL PRIMARY KEY,
+      password varchar(10) NOT NULL,
+      first_name varchar(20) NOT NULL,
+      last_name varchar(20) NOT NULL,
+      gender smallint NOT NULL,
+      dob date NOT NULL,
+      email varchar(20) NOT NULL,
+      phone varchar(20) NOT NULL,
+      profile_photo varchar(50) NOT NULL,
+      address varchar(200) NOT NULL,
+      city varchar(50) NOT NULL,
+      country varchar(50) NOT NULL
+);

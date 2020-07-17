@@ -1,0 +1,170 @@
+		<%- contentFor('body') %>
+
+		<div class="site-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 property-title">
+						<h2><%= property.name %></h2> 
+						<span class="inline-small"><b>$<%= property.price %></b> / night</span>
+						<span class="inline-dot" area-hidden="true">.</span>
+						<span class="icon-star"></span>
+						<span class="inline-small"> <b><%= property.rating != null ? property.rating : '0' %></b>&nbsp;(<%= property.rating_count != null ? property.rating_count : '0' %>)</span>
+						<span class="inline-dot" area-hidden="true">.</span>
+						<span class="inline-small"><%= property.address +', '+ property.city +', '+  property.country %></span>	
+						<!-- <a href="<%= property.id %>/save"><span class="icon-heart float-right fav"></span></a> -->
+					</div>
+				</div>
+			</div>
+		
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 property-slider py-2">
+						<% if(property != null){ %>
+						<% property.property_photo = JSON.parse(property.property_photo); %>
+						<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+							<ol class="carousel-indicators hidden-xs">
+								<% var i=0; property.property_photo.forEach(property_photo => { var active = i++ == 0 ? ' active' : ''; %>
+								<li data-target="#carouselExampleIndicators" data-slide-to="<% i++ %>" class="<%= active %>"></li>
+								<% }) %>
+							</ol>
+							<div class="carousel-inner">
+								<% var i=0; property.property_photo.forEach(property_photo => { var active = i++ == 0 ? ' active' : ''; %>
+									<div class="carousel-item<%= active %>">
+									  	<img class="d-block w-100" src="/images/propertyPhoto/<%= property_photo %>">
+								  		<!-- <div class="carousel-caption d-none d-md-block">
+										    <p>Lorem ipsum 1</p>
+									  	</div> -->
+									</div>
+								<% }) %>
+							</div>
+
+							<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+						</div>	
+						<% } %>
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="row">
+		            <div class="col-md-12">
+		                <div class="searchBox py-2">
+	                    	<div class="form-row">
+	                    		<form class="col-lg-12" method="post" action="<%= property.id %>">
+	                                <div class="form-row">
+	                                	<div class="col-lg-3 col-md-3 col-sm-6 item">
+		                                    <input type="text" name="checkin" value="<%= session.checkin != null ? session.checkin : ''; %>" placeholder="Check In"  class="form-control datepicker px-2" required>
+		                                </div>
+		                                <div class="col-lg-3 col-md-3 col-sm-6 item">
+		                                    <input type="text" name="checkout" value="<%= session.checkout != null ? session.checkout : ''; %>" placeholder="Check Out"  class="form-control datepicker px-2" required>
+		                                </div>
+		                                <div class="col-lg-3 col-md-3 col-sm-12 item">
+		                                	<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+		                                    <button class="btn btn-primary text-white btn-block" type="submit" name="check" value="check">
+			                                    Check Availability
+			                                </button>
+		                                </div>
+		                                <div class="col-lg-3 col-md-3 col-sm-12 item">
+	                            			<input type="hidden" name="propertyId" value="<%= property.id; %>">
+		                            		
+		                            		<span data-toggle="tooltip" data-placement="bottom" title="Check availability before booking!" tabindex="0">
+			                            		<button class="btn btn-primary text-white btn-block" type="submit" name="book" value="book" <%= session.check == null || (session.check != null && session.check.propertyId == property.id && session.check.findBooking === true) ? 'style=pointer-events:none; disabled' : ''; %>>
+				                                	Book Now
+				                            	</button>
+			                            	</span>			                            	
+			                            </div>
+	                                </div>
+                            	</form>
+	                        </div>
+	                    </div>
+		            </div>
+		        </div>
+			</div>
+		</div>
+		
+		<div class="site-section bg-light">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 property-details">
+						<p><%= property.details %></p>						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="site-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="pb-4"><span class="icon-star"></span>&nbsp;<%= property.rating != null ? property.rating : '0' %> (<%= property.rating_count != null ? property.rating_count : '0' %> reviews)</h4>
+						
+						<% if(typeof reviews !== 'undefined' && reviews !== null){ %>
+						<div class="row">
+							
+							<% reviews.forEach(review => { %>
+							<div class="col-md-6 pb-4 property-review">
+								<div class="form-row pb-2">
+									<div class="col-md-2 col-sm-2 img">
+										<img class="img-fluid rounded-circle" src="/images/profilePhoto/user/<%= review.profile_photo %>">
+									</div>
+									<div class="col-md-10 col-sm-8 align-self-center title">
+										<span class="d-block">
+											<b><%= review.first_name %></b><small class="hidden-xs">, <i><%= review.country %></i></small>	
+										</span>
+										<small><%= review.rdate %></small>
+										<span class="inline-dot">.</span>
+										<b><span class="icon-star"></span> <%= review.rrating %></b>
+									</div>
+								</div>
+								<p><%= review.details.substr(0,300); %> ... </p>
+							</div>
+							<% }); %>
+							
+						</div> 
+
+						<div class="text-center">
+							<a href="<%= property.id %>/reviews" class="btn btn-primary px-5" type="button">Show All</a>	
+						</div>
+						<% } else{ %>
+						<p>No reviews found!</p>
+						<% } %>
+
+					</div>
+				</div>
+			</div>	
+		</div>
+		
+		<div class="site-section bg-light">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 about-host">
+						<div class="row">
+							<div class="col-lg-3 col-md-4 col-sm-4">
+
+								<h4 class="pb-4">About Host</h4>
+								<div class="form-row">
+									<div class="col-lg-4 col-md-7  col-sm-6 img">
+										<img class="img-fluid rounded-circle" src="/images/profilePhoto/host/<%= host.profile_photo %>">
+									</div>
+									<div class="col-lg-8 col-md-12 col-md-6 align-self-center title">
+										<b><%= host.first_name +' '+ host.last_name %></b><br>
+										<a href="/messages/<%= host.hid %>" class="btn btn-primary btn-sm mt-2" type="button">Contact</a>	
+									</div>
+								</div>
+
+							</div>
+							<div class="col-lg-9 col-md-8 col-sm-8">
+								<br><p><%= host.about %></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,156 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container register">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-6 image">
+                                <img class="img-fluid" src="/images/03-japan.jpg">
+                            </div>
+                            <div class="col-md-6 title">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a aria-controls="user" aria-selected="true" class="nav-link btn-outline-primary active" data-toggle="tab" href="#user" id="user-tab" role="tab">User</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a aria-controls="host" aria-selected="false" class="nav-link btn-outline-primary" data-toggle="tab" href="#host" id="host-tab" role="tab">Host</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content pt-4" id="myTabContent">
+                                    <div aria-labelledby="user-tab" class="tab-pane fade show active" id="user" role="tabpanel">
+                                        
+                                        <h2 class="pb-3">Join As a Property Finder!</h2>
+                                        
+                                        <% var link = typeof booking !== 'undefined' ? '/register/user?redirect=' + booking.redirect + '&propertyId=' + booking.propertyId + '&checkin=' + booking.checkin + '&checkout=' + booking.checkout : '/register/user' %>
+                                        <form method="post" action="<%= link %>" class="row compact-label" enctype="multipart/form-data">
+                                            
+                                            <div class="form-group col-md-6">
+                                                <label>Username</label> 
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span>u-</span>
+                                                    </div>
+                                                    <input class="form-control" name="id" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Password</label> 
+                                                <input class="form-control" name="password" type="password" data-toggle="tooltip" data-placement="bottom" title="Password must contain uppercase, loweercase letter and digit!" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>First Name</label> 
+                                                <input class="form-control" name="firstName" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Last Name</label> 
+                                                <input class="form-control" name="lastName" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Email Address</label> 
+                                                <input class="form-control" name="email" type="email" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Phone</label> 
+                                                <input class="form-control" name="phone" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Birthday</label> 
+                                                <input class="form-control datepicker px-2" name="dob" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Gender</label> 
+                                                <select class="form-control" name="gender" required>
+                                                    <option value="0">Male</option>
+                                                    <option value="1">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Address</label> 
+                                                <input class="form-control" name="address" placeholder="Street Address" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" name="city" placeholder="City" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input class="form-control" name="country" placeholder="Country" type="text" required>
+                                            </div>
+                                            <div class="custom-file mx-3 mb-3">
+                                                <input class="custom-file-input" name="profilePhoto" id="customFile" type="file">
+                                                <label class="custom-file-label" for="customFile">Choose Profile Photo</label>
+                                            </div>
+
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button name="userSubmit" value="userSubmit" class="btn btn-primary btn-block mx-3" type="submit">Register</button>
+                                        </form>
+
+                                    </div>
+                                    <div aria-labelledby="host-tab" class="tab-pane fade" id="host" role="tabpanel">
+                                        
+                                        <h2 class="pb-3">Join As a Property Host!</h2>
+                                        
+                                        <% var link = typeof booking !== 'undefined' ? '/register/host?redirect=' + booking.redirect + '&propertyId=' + booking.propertyId + '&checkin=' + booking.checkin + '&checkout=' + booking.checkout : '/register/host' %>
+                                        <form method="post" action="<%= link %>" class="row compact-label" enctype="multipart/form-data">
+                                            <div class="form-group col-md-6">
+                                                <label>Username</label> 
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span>h-</span>
+                                                    </div>
+                                                    <input class="form-control" name="hid" type="text" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Password</label> 
+                                                <input class="form-control" name="hpassword" type="password" data-toggle="tooltip" data-placement="bottom" title="Password must contain uppercase, loweercase letter and digit!" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>First Name</label> 
+                                                <input class="form-control" name="hfirstName" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Last Name</label> 
+                                                <input class="form-control" name="hlastName" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Email Address</label> 
+                                                <input class="form-control" name="hemail" type="email" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Phone</label> 
+                                                <input class="form-control" name="hphone" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Birthday</label> 
+                                                <input class="form-control datepicker px-2" name="hdob" type="text" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Gender</label> 
+                                                <select class="form-control" name="hgender" required>
+                                                    <option value="0">Male</option>
+                                                    <option value="1">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label>About You</label> 
+                                                <textarea class="form-control" type="text" name="habout" data-toggle="tooltip" data-placement="bottom" title="Length must be 50 chars long!" required></textarea> 
+                                            </div>
+                                            <div class="custom-file mx-3 mb-3">
+                                                <input class="custom-file-input" name="hprofilePhoto" id="customFile" type="file">
+                                                <label class="custom-file-label" for="customFile">Choose Profile Photo</label>
+                                            </div>
+
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button name="hostSubmit" value="hostSubmit" class="btn btn-primary btn-block mx-3" type="submit">Register</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>

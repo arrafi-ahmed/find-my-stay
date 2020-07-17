@@ -1,0 +1,58 @@
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 item">
+                    <h3 class="footer-heading mb-4">About FindMyStay</h3>
+                    <p>FindMyStay provides a platform for hosts to accommodate guests with short-term lodging and homestays!</p>
+                    
+                </div>
+                <div class="col-lg-4 col-md-4 mb-5 mb-lg-0 item">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="footer-heading mb-4">Navigations</h3>
+                        </div>
+                        
+                        <% if(role == 'user'){ %>
+                            <%- include('menu-footer-user') %>
+                        <% } else if(role == 'host'){ %>
+                            <%- include('menu-footer-host') %>
+                        <% } else{ %>
+                            <%- include('menu-footer-general') %>
+                        <% } %>                            
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-5 mb-lg-0 item">
+                    <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
+                    <form action="/subscribe">
+                        <div class="input-group mb-3">
+                            <input name="subscribeEmail" aria-label="Enter Email" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" type="email" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary text-white" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mt-2 text-center">
+                        <a class="pl-0 pr-3" href="#"><span class="icon-facebook"></span></a> 
+                        <a class="pl-3 pr-3" href="#"><span class="icon-twitter"></span></a> 
+                        <a class="pl-3 pr-3" href="#"><span class="icon-instagram"></span></a> 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-md-12">
+                    <div class="mt-2 text-center">
+                        <p class="mb-0">
+                            &copy;<script>document.write(new Date().getFullYear());</script> | Developed with <i aria-hidden="true" class="icon-heart-o"></i> by <a href="http://portfolio-raf.cf" target="_blank">Raf</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/js/jquery-3.3.1.min.js"></script> 
+    <script src="/js/popper.min.js"></script> 
+    <script src="/js/bootstrap.min.js"></script> 
+    <script src="/js/bootstrap-datepicker.min.js"></script> 
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h2 class="pb-3 bb">Add Property</h2>
+                        <form method="post" enctype="multipart/form-data" class="row">
+                            <div class="form-group col-md-12">
+                                <label>Name</label> 
+                                <input class="form-control" type="text" name="name" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Description</label> 
+                                <textarea class="form-control" type="text" name="description" required></textarea> 
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Price</label> 
+                                <input class="form-control" type="text" name="price" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Type</label>
+                                <div class="dropdown">
+                                    <select class="custom-select" name="type" required>
+                                        <option value="1">Entire place</option>
+                                        <option value="2">Private room</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Street Address</label> 
+                                <input class="form-control" type="text" name="address" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>City</label> 
+                                <input class="form-control" type="text" name="city" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Country</label> 
+                                <input class="form-control" type="text" name="country" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Property Images</label> <br>
+                                <small>* Upload minimum 3 images</small><br>
+                                <small>* Image ratio must be 3:1 (Width x Height)</small><br>
+                                <div class="row pt-3">
+                                    <input class="form-control-file col-md-4" id="propertyPhoto" type="file" name="propertyPhoto" required>
+                                    <input class="form-control-file col-md-4" id="propertyPhoto1" type="file" name="propertyPhoto" required>
+                                    <input class="form-control-file col-md-4" id="propertyPhoto2" type="file" name="propertyPhoto" required>    
+                                </div>
+                            </div>
+
+                            <div class="w-100 bt">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button class="btn btn-primary float-right" value="add" type="submit">Add</button> 
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>

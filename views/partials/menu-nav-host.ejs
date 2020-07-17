@@ -1,0 +1,21 @@
+<li class="nav-item <%= path == '/manage-bookings' || path == '/manage-bookings/' + (typeof invoice !== 'undefined' ? invoice.bookId : '') + '/invoice' ? 'active' : '' %>">
+    <a class="nav-link" href="/manage-bookings">Bookings</a>
+</li>
+
+<li class="nav-item <%= path == '/manage-property' || path == '/manage-property/add' || path == '/manage-property/'+ (typeof property !== 'undefined' ? property.id : '') +'/edit' ? 'active' : '' %>">
+    <a class="nav-link" href="/manage-property">Property</a>
+</li>
+
+<li class="nav-item <%= path == '/messages' || path == ('/messages/' + (typeof paramsId !== 'undefined' ? paramsId : '')) ? 'active' : '' %>">
+    <a class="nav-link" href="/messages">Messages</a>
+</li>
+
+<li class="nav-item dropdown">
+    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
+        <span class="badge"><span class="icon-user"></span></span>
+    </a>
+    <div aria-labelledby="navbarDropdown" class="dropdown-menu">
+        <a class="dropdown-item" href="/<%= role %>/<%= username %>">Account</a>
+        <a class="dropdown-item" href="/logout">Logout</a>
+    </div>
+</li>

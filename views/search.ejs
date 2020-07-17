@@ -1,0 +1,75 @@
+        <%- contentFor('body') %>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="searchBox pb-4">
+                                    <form action="/search">
+                                        <div class="form-row">
+                                            <div class="col-lg-4 col-md-4 col-sm-12 item">
+                                                <input type="text" name="location" placeholder="Location" value="<%= typeof query !== 'undefined' && query !== null ? query.location : ''; %>" class="form-control" required>
+                                            </div> 
+                                            <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                                <input type="text" name="checkin" placeholder="Check In" value="<%= typeof query !== 'undefined' && query !== null ? query.checkin : ''; %>" class="form-control datepicker px-2" required>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                                <input type="text" name="checkout" placeholder="Check Out" value="<%= typeof query !== 'undefined' && query !== null ? query.checkout : ''; %>" class="form-control datepicker px-2" required>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                                <% both = entirePlace = privateRoom = null; (typeof query !== 'undefined' && query.type == "0,1" ? both="selected" : (typeof query !== 'undefined' && query.type == "0" ? entirePlace="selected" : privateRoom="selected")); %>
+                                                <select name="type" class="form-control" required>
+                                                    <option value="" disabled>Type</option>
+                                                    <option value="both" <%= both %>>Both</option>
+                                                    <option value="entire-place" <%= entirePlace %>>Entire Place</option>
+                                                    <option value="private-room" <%= privateRoom %>>Private Room</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                                <button class="btn btn-primary text-white btn-block" id="button-addon2" type="submit">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <% if(typeof propertyList !== 'undefined' && propertyList !== null){ %>
+
+                            <div class="col-md-12 pb-2">
+                                <h3><%= propertyList.length %> Property found in <%= query.location %></h3>
+                            </div>
+
+                            <% propertyList.forEach(property => { %>
+                            <% property.property_photo = JSON.parse(property.property_photo); %>
+                            <div class="col-lg-3 col-sm-6 pb-2">
+                                <a href="<%= baseUrl + '/property/' + property.id %>">
+                                <div class="searchProperty">
+                                    <img class="img-fluid pb-2" alt="Bootstrap Image Preview" src="images/propertyPhoto/<%= property.property_photo[0] %>">
+                                    <span class="inline-small"><b><%= property.name; %></b></span><br>
+                                    <span class="inline-small"> <%= property.type == 0 ? "Entire Place" : "Private Room"; %></span><br>
+                                    <span class="inline-small"> <%= property.city+", "+property.country; %></span><br>
+                                    <span class="inline-small"><b>$<%= property.price; %></b> / night </span>
+                                    <span class="inline-dot" area-hidden="true">.</span>
+                                    <b><span class="icon-star"></span>&nbsp;<span class="inline-small"><%= property.rating != null ? property.rating : "N/A"; %></b></span>
+                                    <span class="inline-small"><%= property.rating != null ? "(" + property.rating_count + ")" : ""; %></span>
+                                </div>
+                                 </a>
+                            </div>
+                            <% }); %>
+                            <% } else { %> 
+                            <div class="col-md-12">
+                                <h3>No property found!</h3>
+                            </div>
+                            <% } %> 
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>

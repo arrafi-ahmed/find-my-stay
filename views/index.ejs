@@ -1,0 +1,229 @@
+        <%- contentFor('body') %>
+
+        <% if(property[0] != null) { %>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 promote-ad">
+                    <a href="<%= baseUrl +'/property/'+ property[0].id %>">
+                    <div class="row">
+                        <small>Featured</small>
+                        <div class="col-md-3 col-sm-5">
+                            <% property[0].property_photo = JSON.parse(property[0].property_photo); %>
+                            <img alt="Ad" class="img-fluid img-thumbnail" src="images/propertyPhoto/<%= property[0].property_photo[0] %>">
+                        </div>
+                        <div class="col-md-9 col-sm-7">
+                            <div class="pl-1">
+                                <b><%= property[0].name; %></b><br>
+                                <span class="inline-small"> <%= property[0].type==1 ? "Entire Place" : "Private Room"; %></span>
+                                <span class="inline-dot" area-hidden="true">.</span>
+                                <span class="inline-small"><%= property[0].city; %>, <%= property[0].country; %></span><br>
+                                <span class="inline-small"><b>$<%= property[0].price; %></b> / night </span>
+                                <span class="inline-dot" area-hidden="true">.</span>
+                                <span class="icon-star"></span>&nbsp;<span class="inline-small"><b><%= property[0].rating != null ? property[0].rating : "N/A"; %></b></span>
+                                <span class="inline-small"><%= property[0].rating != null ? "(" + property[0].rating_count + ")" : ""; %></span>                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <% } else {} %>
+
+        <div class="bg-light pt-5" id="searchBox">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="searchBox pb-3">
+                            <h2 class="text-center pb-4">Find Your Next Escape!</h2>
+                            <form action="/homeSearch">
+                                <div class="form-row">
+                                    <div class="col-lg-4 col-md-4 col-sm-12 item">
+                                        <input type="text" name="location" value="<%= session.location != null ? session.location : ''; %>" class="form-control" placeholder="Location" required>
+                                    </div> 
+                                    <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                        <input type="text" name="checkin" value="<%= session.checkin != null ? session.checkin : ''; %>" class="form-control datepicker px-2" placeholder="Check In" required>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                        <input type="text" name="checkout" value="<%= session.checkout != null ? session.checkout : ''; %>" class="form-control datepicker px-2" placeholder="Check Out" required>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                        <select name="type" class="form-control" required>
+                                            <option value="" disabled selected>Type</option>
+                                            <option value="both">Both</option>
+                                            <option value="entire-place">Entire Place</option>
+                                            <option value="private-room">Private Room</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-3 item">
+                                        <button class="btn btn-primary text-white btn-block" id="button-addon2" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 homePropertyType">
+                                <a href="/search/type/entire-place">
+                                    <span class="h4 d-block">Browse Entire Places</span>
+                                    <img class="img-fluid" alt="" src="images/entire-place.jpg">                
+                                </a>
+                                
+                            </div>  
+                        
+                            <div class="col-lg-6 col-md-6 homePropertyType">
+                                <a href="/search/type/private-room">
+                                    <span class="h4 d-block">Browse Private Rooms</span>
+                                    <img class="img-fluid" alt="" src="images/private-room.jpg">                
+                                </a>
+                            </div> 
+                        </div>
+
+                        <div class="site-section bg-light">
+                            <div class="container">
+                                <div class="row align-items-stretch">
+                                    <div class="col-md-6 col-lg-6 mb-4 mb-lg-0 feature">
+                                        <div class="d-flex">
+                                            <div class="mr-4 icon align-self-center">
+                                                <span class="text-primary icon-building"></span>
+                                            </div>
+                                            <div>
+                                                <h3>Host Property</h3>
+                                                <span>No matter what kind of home or room you have to share, FindMyStay makes it simple and secure to host travelers.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 mb-4 mb-lg-0 feature">
+                                        <div class="d-flex">
+                                            <div class="mr-4 icon align-self-center">
+                                                <span class="text-primary icon-map-marker"></span>
+                                            </div>
+                                            <div>
+                                                <h3>Rent Property</h3>
+                                                <span>From mountain cabins to lakeside bungalows, these private homes are perfect for a drivable retreat.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <% if(testimonials != null) { %>
+        <div class="site-section block-13">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 col-md-9">
+                        <h2 class="text-black text-center pb-4">User Reviews for Recent Stays</h2>
+                    </div>
+                </div>
+                
+                <div class="carousel slide" data-ride="carousel" id="carouselExampleSlidesOnly">
+                    <div class="carousel-inner">
+                        <% var i=0; testimonials.forEach(testimonial => { var active = i++ == 0 ? ' active' : ''; %>
+                        <% testimonial.property_photo = JSON.parse(testimonial.property_photo); %>
+                        <div class="carousel-item <%= active %>">
+                            <div class="item">
+                                
+                                <div class="row testimonials">
+
+                                    <div class="col-lg-12">
+                                        <img alt="Image" class="img-fluid" src="images/propertyPhoto/<%= testimonial.property_photo[0] %>">
+                                    </div>
+
+                                    <div class="overlap-left col-lg-8 p-md-4 align-self-center text-white">
+                                        <p class="lead">
+                                            <%= testimonial.name %>
+                                            <span class="inline-dot" area-hidden="true">.</span>
+                                            <%= testimonial.city +', '+ testimonial.country; %>
+                                        </p>
+                                        <span> 
+                                            <span class="inline-dot" area-hidden="true">.</span>
+                                            <%= testimonial.details.substr(0,300); %> ...
+                                        </span><br>
+                                        <span>
+                                            &mdash; <em><%= testimonial.user_id; %></em>
+                                            <span class="inline-dot" area-hidden="true">.</span>
+                                            <span class="icon-star"></span>
+                                            <%= testimonial.rating %>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row d-block d-md-none">
+                                    <div class="col-sm-12">
+                                        <p class="lead">
+                                            <%= testimonial.name %>
+                                            <span class="inline-dot" area-hidden="true">.</span>
+                                            <%= testimonial.city +', '+ testimonial.country; %>
+                                        </p>
+                                        <span> 
+                                            <span class="inline-dot" area-hidden="true">.</span>
+                                            <%= testimonial.details.substr(0,300); %> ...
+                                        </span><br>
+                                        <span>
+                                            &mdash; <em><%= testimonial.user_id; %></em>
+                                            <span class="inline-dot" area-hidden="true">.</span>
+                                            <span class="icon-star"></span>
+                                            <%= testimonial.rating %>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+                  
+            </div>
+        </div>
+        <% } else {} %>
+
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-7 text-center">
+                        <h2 class="text-black">Top Destinations</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-sm-4 mb-4 mb-lg-4">
+                        <a class="text-center" href="/search/location/bali">
+                            <img alt="Image" class="img-fluid" src="images/02-bali.jpg">
+                            <h3 class="pt-2">Bali</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-sm-4 mb-4 mb-lg-4">
+                        <a class="unit-1 text-center" href="/search/location/berlin">
+                            <img alt="Image" class="img-fluid" src="images/05-berlin.jpg">
+                            <h3 class="pt-2">Berlin</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-sm-4 mb-4 mb-lg-4">
+                        <a class="unit-1 text-center" href="/search/location/dhaka">
+                            <img alt="Image" class="img-fluid" src="images/04-dhaka.jpg">
+                            <h3 class="pt-2">Dhaka</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section border-top">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h2 class="mb-5 text-black">Want To Travel With Us?</h2>
+                        <p class="mb-0"><a class="btn btn-primary py-3 px-5 text-white" href="#searchBox">Book Now</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>

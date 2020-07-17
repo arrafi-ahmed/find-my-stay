@@ -1,0 +1,57 @@
+        <%- contentFor('body') %>
+        
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 confirm-booking">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-12 order-lg-1 order-2">
+                                <h2 class="pb-3 bb">
+                                    <span class="icon-star"></span>&nbsp;<span class="inline-small"><b><%= property.rating != null ? property.rating : "N/A"; %></b></span>
+                                    <span class="inline-small"><%= property.rating != null ? "(" + property.rating_count + " reviews)" : ""; %></span>
+                                </h2>
+                                
+                                <% if(typeof reviews !== 'undefined' && reviews !== null){ %>
+                                <div class="row">
+                                    
+                                    <% reviews.forEach(review => { %>
+                                    <div class="col-md-12 py-3 bb">
+                                        <div class="form-row pb-1">
+                                            <div class="col-md-4 single-review">
+                                                <img class="img-fluid rounded-circle w-50" src="/images/profilePhoto/user/<%= review.profile_photo %>">
+                                                <span class="d-block pt-2 pl-1 info">
+                                                    <b><%= review.first_name %></b> <small class="hidden-xs">, <i><%= review.country %></i></small><br>
+                                                    <small><%= review.rdate %></small>
+                                                    <span class="inline-dot">.</span>
+                                                    <b><span class="icon-star"></span> <%= review.rrating %></b>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-8 pt-3">
+                                                <p><%= review.details %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                    
+                                </div> 
+
+                                <% } else{ %>
+                                <p>No reviews found!</p>
+                                <% } %>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 order-lg-2 order-1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="/property/<%= property.id %>">
+                                            <%- include('partials/sidebar') %>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>    
+        </div>

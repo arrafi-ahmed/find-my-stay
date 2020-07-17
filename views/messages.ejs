@@ -1,0 +1,107 @@
+        <%- contentFor('body') %>
+        
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <% if(typeof paramsId !== 'undefined' && paramsId !== null) { %>
+                        <h2 class="pb-3 bb">Chat with <%= paramsId %></h2>
+                        <% } else{ %>
+                        <a data-toggle="modal" href="#modal-container" id="modal" role="button">
+                            <button class="btn btn-primary text-white float-right">New Message</button>
+                        </a>
+                        <h2 class="pb-3 bb">Chats</h2>
+                        <% } %>
+                    </div>
+
+                    <!-- inbox -->
+                    <% if(typeof contacts !== 'undefined'){ %>
+                    <div class="col-md-12 messages">
+                        <% if(contacts !== null ){ %>
+                        <% contacts.forEach(contact => { %>
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <a href="/messages/<%= contact.id %>" class="h5">
+                                    <div class="bg-light py-3 px-3">
+                                        <span class="h5"><%= contact.id %></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <% }); %>
+                        <% } else{ %>
+                        <h5>No recent conversation found!</h5>
+                        <% } %>
+                    </div>
+                    <% } %>
+
+                    <!-- new message modal -->
+                    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="modal-container" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Send New Message</h5>
+                                    <button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form method="post" action="/messages">
+                                        <label>To: </label>
+                                        <input class="form-control mb-3" type="text" name="receiver">
+                                        <label>Message: </label>
+                                        <textarea class="form-control mb-2" name="content"></textarea>
+                                        <div class="">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button class="btn btn-primary float-right" type="submit"><span class="icon-send-o"></span> Send</button>
+                                        </div>
+                                    </form> 
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- single message -->
+                    <% if(typeof messages !== 'undefined'){ %> 
+                    <div class="col-md-12">
+                        <% if(messages !== null){ %>
+                        <% messages.forEach(message => { %>
+                        <% var float = message.sender == username ? 'float-right btn-primary' : 'float-left btn-secondary' %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="my-2 px-3 py-2 messageBox <%= float %>">
+                                    <span class="h6"><%= message.sender %> </span> 
+                                    <span class="inline-dot">.</span>
+                                    <small><i><%= message.ctime %></i></small><br>
+                                    <% if(message.is_invoice == null) { %>
+                                        <%= message.content %>
+                                    <% }else{ %>
+                                        <span class="pb-3">Invoice for the latest booking!</span><br>
+                                        <a href="/messages/<%= message.id %>/invoice" target="_blank">
+                                            <button class="btn btn-primary-o d-block">Invoice</button>
+                                        </a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                        <% } %>
+
+                        <div class="row">
+                            <div class="col-md-12 mt-3">
+                                <form method="post" class="input-group" action="/messages/<%= paramsId %>">
+                                    <input class="form-control send-message" type="text" name="content" placeholder="Send New Message">
+                                    <div class="input-group-append">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn btn-primary" type="submit"><span class="icon-send-o"></span></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                                                            
+                </div>
+            </div>
+        </div>
