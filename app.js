@@ -36,7 +36,7 @@ const app = express();
 //configuration
 app.set('view engine', 'ejs');
 app.set('layout', 'partials/master');
-app.set('trust proxy', 1)
+// app.set('trust proxy', 1)
 
 //middlewares
 app.locals.siteName = 'FindMyStay';
