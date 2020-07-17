@@ -46,7 +46,8 @@ router.get('/',
 });
 
 router.get('/type/:type', async (req, res)=>{
-	const ip = req.connection.remoteAddress;
+	// const ip = req.connection.remoteAddress;
+	const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
 	const city = geoip.lookup(ip).city;
 	const date = new Date();
 	const today = new Date().toISOString().slice(0,10);
