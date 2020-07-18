@@ -23,8 +23,8 @@ router.get('/:id', async (req, res)=>{
 router.post('/:id', 
 	[
 	body('checkin')
-		.isAfter(new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000).toDateString())
-			.withMessage('Date can not be before today!'),
+		.isAfter(new Date(Date.now() - 1000*86400).toDateString())
+			.withMessage('Date cant be before today!'),
 	body('checkout')
 		.custom((value, { req }) => {
 			var checkin = new Date(req.body.checkin).getTime();
