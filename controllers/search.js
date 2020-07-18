@@ -52,6 +52,7 @@ router.get('/type/:type', async (req, res)=>{
 	const date = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000);
 	const today = date.toISOString().slice(0, 10);
 	const tomorrow = new Date(date.setDate(date.getDate() + 1)).toISOString().slice(0,10);
+	console.log(new Date());
 	console.log(date);
 	console.log(today);
 	console.log(tomorrow);
