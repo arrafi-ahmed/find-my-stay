@@ -1,5 +1,6 @@
 const express 	= require('express');
 const path 		= require('path');
+const fs 		= require('fs');
 const router 	= express.Router();
 const userModel = require.main.require('./models/user-model');
 const hostModel = require.main.require('./models/host-model');
@@ -87,7 +88,9 @@ router.post('/user',
 				data.profilePhoto = name;			
 			}
 			else{
-				data.profilePhoto = "defaultProfile.jpg";			
+				data.profilePhoto = "defaultProfile.jpg";		
+				var tempFile = req.files.profilePhoto.tempFilePath.replace(/\\/g, '/');
+				fs.unlinkSync(tempFile);					
 			}
 
 			//insert operation
@@ -182,7 +185,9 @@ router.post('/host',
 				data.profilePhoto = name;			
 			}
 			else{
-				data.profilePhoto = "defaultProfile.jpg";			
+				data.profilePhoto = "defaultProfile.jpg";		
+				var tempFile = req.files.profilePhoto.tempFilePath.replace(/\\/g, '/');
+				fs.unlinkSync(tempFile);					
 			}
 
 			//insert operation

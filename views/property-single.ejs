@@ -21,7 +21,7 @@
 					<div class="col-md-12 property-slider py-2">
 						<% if(property != null){ %>
 						<% property.property_photo = JSON.parse(property.property_photo); %>
-						<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+						<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
 							<ol class="carousel-indicators hidden-xs">
 								<% var i=0; property.property_photo.forEach(property_photo => { var active = i++ == 0 ? ' active' : ''; %>
 								<li data-target="#carouselExampleIndicators" data-slide-to="<% i++ %>" class="<%= active %>"></li>

@@ -1,5 +1,6 @@
 const express 		= require('express');
 const path 			= require('path');
+const fs 			= require('fs');
 const router 		= express.Router();
 const hostModel		= require.main.require('./models/host-model');
 const bookingsModel	= require.main.require('./models/bookings-model');
@@ -13,8 +14,7 @@ router.get('*', (req, res, next) => {
 	}else if(req.cookies.role == 'user'){
 		req.session.message = {type:'error', error:'Access Denied!'};
 		res.redirect('/home');
-	}
-	else{
+	}else{
 		next();
 	}
 });
@@ -84,11 +84,15 @@ router.post('/:id/edit',
 				name = req.body.oldPhoto;
 			}
 			req.files.profilePhoto.mv('public/images/profilePhoto/host/'+name, (error)=>{
-				if (error) {console.log("Error uploading");
-				}else {console.log("Successfully uploaded");}
+				if (error) {console.log("Error uploading");}
+				else {console.log("Successfully uploaded");}
 			});
 
 			host.profilePhoto = name;
+			
+			var tempFile = req.files.profilePhoto.tempFilePath.replace(/\\/g, '/');
+			fs.unlinkSync(tempFile);
+			
 			const updateHost = await hostModel.updateHost(host);
 			if (updateHost){
 				req.session.message = {type:'success', success:'Updated successfully!'};
@@ -99,6 +103,9 @@ router.post('/:id/edit',
 				res.redirect('/host/'+req.params.id+'/edit');
 			}
 		} else{
+			var tempFile = req.files.profilePhoto.tempFilePath.replace(/\\/g, '/');
+			fs.unlinkSync(tempFile);
+
 			const updateHostWithoutImg = await hostModel.updateHostWithoutImg(host);
 			if (updateHostWithoutImg){
 				req.session.message = {type:'success', success:'Updated successfully!'};

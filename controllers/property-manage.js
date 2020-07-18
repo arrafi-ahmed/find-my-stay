@@ -60,58 +60,62 @@ router.post('/add',
 			hostId: req.cookies.username
 		}
 		if (req.files != null) {
-			var tempFile;
 			// check image size
-			const validImageSize = req.files.propertyPhoto.some(photo => photo.size < 400000)
-	    	if (!validImageSize) {
+			const invalidImageSize = req.files.propertyPhoto.some(photo => photo.size > 400000);
+	    	if (invalidImageSize) {
+	    		req.files.propertyPhoto.forEach(photo => {
+	    			var tempFile = photo.tempFilePath.replace(/\\/g, '/');
+	    			fs.unlinkSync(tempFile);
+	    		});
 	    		req.session.message = {type:'error', error:'Image size must be less than 400KB'};
 				res.redirect('/manage-property');
-	    	}
-			//check image ratio
-			const promises = req.files.propertyPhoto.map(photo => new Promise(resolve => {
-			    var tempFile = photo.tempFilePath.replace(/\\/g, '/');
-			    const acceptedRatio = 3;
-			    // get image ratio
-			    sizeOf(tempFile, (err, dimensions) =>{
-			    	const width = dimensions.width;
-			        const height = dimensions.height;
-			        const ratio = width / height;
-			        if (ratio < (acceptedRatio - 0.1) || ratio > (acceptedRatio + 0.1)) {
-			        	fs.unlinkSync(tempFile);
-			            return resolve(false);
-			        }
-			        resolve(true);
-			    });
-			}));
-			const result = await Promise.all(promises);
+	    	}else{
+		    	//check image ratio
+				const promises = await req.files.propertyPhoto.map(photo => new Promise(resolve => {
+				    var tempFile = photo.tempFilePath.replace(/\\/g, '/');
+				    const acceptedRatio = 3;
+				    // get image ratio
+				    sizeOf(tempFile, (err, dimensions) =>{
+				    	const width = dimensions.width;
+				        const height = dimensions.height;
+				        const ratio = width / height;
+				        if (ratio < (acceptedRatio - 0.1) || ratio > (acceptedRatio + 0.1)) {
+				        	fs.unlinkSync(tempFile);
+				            return resolve(false);
+				        }
+				        resolve(true);
+				    });
+				}));
+				const result = await Promise.all(promises);
 
-			// if any of the ratio is invalid, redirect
-			if (result.some(ratio => ratio === false)) {
-			   
-			    req.session.message = {type:'error', error:'Image ratio must be 3:1 (W X H)'};
-				res.redirect('/manage-property');
-			} 
-			// else upload
-			else {
-			    for(i=0; i<req.files.propertyPhoto.length; i++){
-			    	const currentSec = new Date().toISOString().slice(17,22).replace('.','-');
-					const name = req.cookies.username + "-" + currentSec + req.files.propertyPhoto[i].name;
-					
-					await req.files.propertyPhoto[i].mv("public/images/propertyPhoto/" + name, (error)=>{
-						if (error) {console.log("Error uploading");
-						}else{console.log("Successfully uploaded");}
-					});
-					property.propertyPhotos.push(name);
+				// if any of the ratio is invalid, redirect
+				if (result.some(ratio => ratio === false)) {
+				   	
+				    req.session.message = {type:'error', error:'Image ratio must be 3:1 (W X H)'};
+					res.redirect('/manage-property');
+				} 
+				// else upload
+				else {
+				    for(i=0; i<req.files.propertyPhoto.length; i++){
+				    	const currentSec = new Date().toISOString().slice(17,22).replace('.','-');
+						const name = req.cookies.username + "-" + currentSec + req.files.propertyPhoto[i].name;
+						
+						await req.files.propertyPhoto[i].mv("public/images/propertyPhoto/" + name, (error)=>{
+							if (error) {console.log("Error uploading");}
+							else{console.log("Successfully uploaded");}
+						});
+						property.propertyPhotos.push(name);
+					}
+					property.propertyPhotos = JSON.stringify(property.propertyPhotos);
+					const insertProperty = await propertyModel.insertProperty(property);
+					if (insertProperty) {
+						req.session.message = {type:'success', success:'Property added successfully!'};
+						res.redirect('/manage-property');
+					}else{
+						req.session.message = {type:'error', error:'Error adding property!'};
+						res.redirect('/manage-property');
+					}				
 				}
-				property.propertyPhotos = JSON.stringify(property.propertyPhotos);
-				const insertProperty = await propertyModel.insertProperty(property);
-				if (insertProperty) {
-					req.session.message = {type:'success', success:'Property added successfully!'};
-					res.redirect('/manage-property');
-				}else{
-					req.session.message = {type:'error', error:'Error adding property!'};
-					res.redirect('/manage-property');
-				}				
 			}
 		}
 		// if no image uploaded
@@ -172,67 +176,82 @@ router.post('/:id/edit',
 			const findZero = req.files.propertyPhoto.some(photo => photo.size == 0);
 			//handling multiple image upload
 			if(!findZero){
-				//check image ratio
-				const promises = req.files.propertyPhoto.map(photo => new Promise(resolve => {
-					//if valid tempfile
-					if (photo.size > 0 ) {
-						const tempFile = photo.tempFilePath.replace(/\\/g, '/');
-					    const acceptedRatio = 3;
-					    // get image ratio
-					    sizeOf(tempFile, (err, dimensions)=>{
-					    	const width = dimensions.width;
-					        const height = dimensions.height;
-					        const ratio = width / height;
-					        if (ratio < (acceptedRatio - 0.1) || ratio > (acceptedRatio + 0.1)) {
-					        	fs.unlinkSync(tempFile);
-					            return resolve(false);
-					        }
-					        resolve(true);
-					    });
-					}else{
-						resolve(null);
-					}		    
-				}));
-				const result = await Promise.all(promises);
-
-				// if any of the ratio is invalid, redirect
-				if (result.some(ratio => ratio === false)) {
-				   
-				    req.session.message = {type:'error', error:'Image ratio must be 3:1 (W X H)'};
+				// check image size
+				const invalidImageSize = req.files.propertyPhoto.some(photo => photo.size > 400000);
+		    	if (invalidImageSize) {
+		    		req.files.propertyPhoto.forEach(photo => {
+		    			var tempFile = photo.tempFilePath.replace(/\\/g, '/');
+		    			fs.unlinkSync(tempFile);
+		    		});
+		    		req.session.message = {type:'error', error:'Image size must be less than 400KB'};
 					res.redirect('/manage-property');
-				} 
-				// else upload
-				else{
-					//add old images
-					for(i=0; i<req.body.oldPhoto.length; i++){
-						property.propertyPhotos.push(req.body.oldPhoto[i]);
-					}
-					const currentSec = new Date().toISOString().slice(17,22).replace('.','-');
-					for(i=0; i<req.files.propertyPhoto.length; i++){
-						//if valid temp file
-						if (req.files.propertyPhoto[i].size > 0) {
-							const name = req.cookies.username + "-" + currentSec + req.files.propertyPhoto[i].name;
-							await req.files.propertyPhoto[i].mv("public/images/propertyPhoto/" + name, (error)=>{
-								if (error) {console.log("Error uploading");
-								}else{console.log("Successfully uploaded");}
-							});
-							property.propertyPhotos.push(name);
-						}					
-					}
-					//update
-					property.propertyPhotos = JSON.stringify(property.propertyPhotos);
-					const updateProperty = await propertyModel.updateProperty(property);
-					if (updateProperty) {
-						req.session.message = {type:'success', success:'Property updated Successfully!'};
+		    	}else{
+					//check image ratio
+					const promises = req.files.propertyPhoto.map(photo => new Promise(resolve => {
+						//if valid tempfile
+						if (photo.size > 0 ) {
+							const tempFile = photo.tempFilePath.replace(/\\/g, '/');
+						    const acceptedRatio = 3;
+						    // get image ratio
+						    sizeOf(tempFile, (err, dimensions)=>{
+						    	const width = dimensions.width;
+						        const height = dimensions.height;
+						        const ratio = width / height;
+						        if (ratio < (acceptedRatio - 0.1) || ratio > (acceptedRatio + 0.1)) {
+						        	fs.unlinkSync(tempFile);
+						            return resolve(false);
+						        }
+						        resolve(true);
+						    });
+						}else{
+							resolve(null);
+						}		    
+					}));
+					const result = await Promise.all(promises);
+
+					// if any of the ratio is invalid, redirect
+					if (result.some(ratio => ratio === false)) {
+					   
+					    req.session.message = {type:'error', error:'Image ratio must be 3:1 (W X H)'};
 						res.redirect('/manage-property');
-					}else{
-						req.session.message = {type:'error', error:'Error updating property!'};
-						res.redirect('/property/'+req.params.id+'/edit');
-					}
-				}	
+					} 
+					// else upload
+					else{
+						//add old images
+						for(i=0; i<req.body.oldPhoto.length; i++){
+							property.propertyPhotos.push(req.body.oldPhoto[i]);
+						}
+						const currentSec = new Date().toISOString().slice(17,22).replace('.','-');
+						for(i=0; i<req.files.propertyPhoto.length; i++){
+							//if valid temp file
+							if (req.files.propertyPhoto[i].size > 0) {
+								const name = req.cookies.username + "-" + currentSec + req.files.propertyPhoto[i].name;
+								await req.files.propertyPhoto[i].mv("public/images/propertyPhoto/" + name, (error)=>{
+									if (error) {console.log("Error uploading");}
+									else{console.log("Successfully uploaded");}
+								});
+								property.propertyPhotos.push(name);
+							}					
+						}
+						//update
+						property.propertyPhotos = JSON.stringify(property.propertyPhotos);
+						const updateProperty = await propertyModel.updateProperty(property);
+						if (updateProperty) {
+							req.session.message = {type:'success', success:'Property updated Successfully!'};
+							res.redirect('/manage-property');
+						}else{
+							req.session.message = {type:'error', error:'Error updating property!'};
+							res.redirect('/property/'+req.params.id+'/edit');
+						}
+					}	
+				}
 			}
 			// handling single image upload
 			else if(findZero && findNonZero){
+				req.files.propertyPhoto.forEach(photo => {
+	    			var tempFile = photo.tempFilePath.replace(/\\/g, '/');
+	    			fs.unlinkSync(tempFile);
+	    		});
 				req.session.message = {type:'error', error:'Upload minimum 3 images!'};
 				res.redirect('/manage-property/'+req.params.id+'/edit');		
 			}

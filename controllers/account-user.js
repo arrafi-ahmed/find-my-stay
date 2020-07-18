@@ -1,5 +1,6 @@
 const express 		= require('express');
 const path 			= require('path');
+const fs 			= require('fs');
 const router 		= express.Router();
 const userModel		= require.main.require('./models/user-model');
 const reviewModel 	= require.main.require('./models/review-model');
@@ -75,6 +76,7 @@ router.post('/:id/edit',
 			country:  		req.body.country,
 			profilePhoto:  	null
 		};
+		//file upload
 		if (req.files.profilePhoto.size != 0) {
 			if (req.body.oldPhoto == "defaultProfile.jpg") {
 				name = req.body.id + path.extname(req.files.profilePhoto.name);
@@ -83,11 +85,15 @@ router.post('/:id/edit',
 				name = req.body.oldPhoto;
 			}
 			req.files.profilePhoto.mv('public/images/profilePhoto/user/'+name, (error)=>{
-				if (error) {console.log("Error uploading");
-				}else {console.log("Successfully uploaded");}
+				if (error) {console.log("Error uploading");}
+				else {console.log("Successfully uploaded");}
 			});
 
 			user.profilePhoto = name;
+
+			var tempFile = req.files.profilePhoto.tempFilePath.replace(/\\/g, '/');
+			fs.unlinkSync(tempFile);
+
 			const updateUser = await userModel.updateUser(user);
 			if (updateUser){
 				req.session.message = {type:'success', success:'Updated successfully!'};
@@ -98,6 +104,9 @@ router.post('/:id/edit',
 				res.redirect('/user/'+req.params.id+'/edit');
 			}
 		}else{
+			var tempFile = req.files.profilePhoto.tempFilePath.replace(/\\/g, '/');
+			fs.unlinkSync(tempFile);
+
 			const updateUserWithoutImg = await userModel.updateUserWithoutImg(user);
 			if (updateUserWithoutImg){
 				req.session.message = {type:'success', success:'Updated successfully!'};
