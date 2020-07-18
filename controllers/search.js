@@ -8,7 +8,7 @@ router.get('/',
 	[
 	query('location').not().isEmpty().trim(),
 	query('checkin')
-		.isAfter(new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000).toDateString())
+		.isAfter(new Date().toDateString())
 			.withMessage('Date cant be before today!'),
 	query('checkout')
 		.custom((value, { req }) => {
@@ -49,12 +49,11 @@ router.get('/',
 router.get('/type/:type', async (req, res)=>{
 	const ip = req.headers['x-forwarded-for'] || (req.connection && req.connection.remoteAddress) || '';
 	const city = geoip.lookup(ip).city;
-	const date = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000);
-	const today = date.toISOString().slice(0, 10);
+	// const date = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60000);
+	const date = new Date();
+	const today = date;
 	const tomorrow = new Date(date.setDate(date.getDate() + 1)).toISOString().slice(0,10);
-	console.log(new Date());
-	console.log(new Date().getTimezoneOffset()*60000);
-	console.log(date);
+	console.log((new Date().getTime() - new Date().getTimezoneOffset()*60000).toDateString());
 	console.log(today);
 	console.log(tomorrow);
 	res.redirect('/search?location='+city+'&checkin='+today+'&checkout='+tomorrow+'&type='+req.params.type);	
