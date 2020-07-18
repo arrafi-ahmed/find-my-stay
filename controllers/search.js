@@ -8,7 +8,7 @@ router.get('/',
 	[
 	query('location').not().isEmpty().trim(),
 	query('checkin')
-		.isAfter(new Date(Date.now() - 1000*60).toDateString())
+		.isAfter(new Date(Date.now() - 1000*86400).toDateString())
 			.withMessage('Date cant be before today!'),
 	query('checkout')
 		.custom((value, { req }) => {
@@ -54,7 +54,7 @@ router.get('/type/:type', async (req, res)=>{
 	const today = date.toISOString().slice(0, 10);
 	const tomorrow = new Date(date.setDate(date.getDate() + 1)).toISOString().slice(0,10);
 	
-	console.log(new Date(Date.now() - 1000*60).toDateString());
+	console.log(new Date(Date.now() - 1000*86400).toDateString());
 	console.log(today);
 	console.log(tomorrow);
 	res.redirect('/search?location='+city+'&checkin='+today+'&checkout='+tomorrow+'&type='+req.params.type);	
