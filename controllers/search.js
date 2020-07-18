@@ -53,7 +53,8 @@ router.get('/type/:type', async (req, res)=>{
 	const today = date.toISOString().slice(0, 10);
 	const tomorrow = new Date(date.setDate(date.getDate() + 1)).toISOString().slice(0,10);
 	
-	console.log(new Date());
+	const n = new Date();
+	console.log(n.toISOString());
 	console.log(date);
 	console.log(today);
 	console.log(tomorrow);
