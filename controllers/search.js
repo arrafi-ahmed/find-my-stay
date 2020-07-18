@@ -53,7 +53,6 @@ router.get('/type/:type', async (req, res)=>{
 	const date = new Date();
 	const today = date;
 	const tomorrow = new Date(date.setDate(date.getDate() + 1)).toISOString().slice(0,10);
-	console.log((new Date().getTime() - new Date().getTimezoneOffset()*60000).toDateString());
 	console.log(today);
 	console.log(tomorrow);
 	res.redirect('/search?location='+city+'&checkin='+today+'&checkout='+tomorrow+'&type='+req.params.type);	
