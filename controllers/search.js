@@ -8,7 +8,7 @@ router.get('/',
 	[
 	query('location').not().isEmpty().trim(),
 	query('checkin')
-		.isAfter(new Date().toDateString())
+		.isAfter(new Date(new Date().toISOString().slice(0, 10)).toDateString())
 			.withMessage('Date cant be before today!'),
 	query('checkout')
 		.custom((value, { req }) => {
