@@ -12,7 +12,7 @@ router.get('/',
 			.withMessage('Date cant be before today!'),
 	query('checkout')
 		.custom((value, { req }) => {
-			var checkin = new Date(req.query.checkin).getTime();
+			var checkin = new Date().getTime();
 			if ( new Date(value).getTime() < new Date(checkin + 1).getTime() ){
 			    throw new Error('Date must be after checkin!');
 			}
