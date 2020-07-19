@@ -159,7 +159,7 @@ module.exports ={
 	},
 	searchBooking: (query)=>{
 		return new Promise((resolve, reject)=>{
-			var sql = "SELECT p.* FROM property p LEFT JOIN bookings b ON b.start_date < TO_DATE($1, 'YYYY-MM-DD') AND b.end_date > TO_DATE($2, 'YYYY-MM-DD') AND b.property_id = p.id WHERE (city ILIKE $3 OR country ILIKE $4 OR country ILIKE $4) AND type in ($5, $6) AND b.id IS NULL;";
+			var sql = "SELECT  ROUND(rating, 2) rrating, p.* FROM property p LEFT JOIN bookings b ON b.start_date < TO_DATE($1, 'YYYY-MM-DD') AND b.end_date > TO_DATE($2, 'YYYY-MM-DD') AND b.property_id = p.id WHERE (city ILIKE $3 OR country ILIKE $4 OR country ILIKE $4) AND type in ($5, $6) AND b.id IS NULL;";
 			db.getResult(sql, [query.checkout, query.checkin, query.location[0], query.location[1], query.type[0], query.type[1]], (result)=>{
 				if(result.length > 0){
 					resolve(result);
