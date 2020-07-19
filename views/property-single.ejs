@@ -10,6 +10,8 @@
 						<span class="icon-star"></span>
 						<span class="inline-small"> <b><%= property.rating != null ? property.rating : '0' %></b>&nbsp;(<%= property.rating_count != null ? property.rating_count : '0' %>)</span>
 						<span class="inline-dot" area-hidden="true">.</span>
+						<span class="inline-small"><b>$<%= property.type == 0 ? 'Entire Place' : 'Private Room'; %></b> / night</span>
+						<span class="inline-dot" area-hidden="true">.</span>
 						<span class="inline-small"><%= property.address +', '+ property.city +', '+  property.country %></span>	
 						<!-- <a href="<%= property.id %>/save"><span class="icon-heart float-right fav"></span></a> -->
 					</div>
