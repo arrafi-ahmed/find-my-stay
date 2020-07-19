@@ -87,8 +87,8 @@ module.exports ={
 	},
 	getPromoteInfo: ()=>{
         return new Promise((resolve, reject)=>{
-            var sql = "select * from property where promote_status = 1;";
-            db.getResult(sql, null, (result)=>{
+            var sql = "select ROUND(rating, 2) rrating, * from property where promote_status = 1;";
+            db.getResult(sql, null, (result)=>{console.log(result);
             	if(result){
 					resolve(result);
 				}else{
