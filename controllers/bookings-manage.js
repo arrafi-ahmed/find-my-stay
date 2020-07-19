@@ -104,11 +104,10 @@ router.post('/:id', async (req, res)=>{
 			const sendMessages = await messagesModel.sendMessage(messageBody);
 			if (insertInvoice && sendMessages && invoicedBooking) {
 				req.session.message = {type:'success', success:'Invoice successfully sent!'}
-				res.redirect('/messages/' + message.userId);
 			}else {
 				req.session.message = {type:'error', error:'Error sending invoice!'}
-				res.redirect('/manage-bookings');
-			}		
+			}	
+			res.redirect('/manage-bookings');	
 		}else{
 			req.session.message = {type:'error', error:'Invalid request!'}
 			res.redirect('/manage-bookings');

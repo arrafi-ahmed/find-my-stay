@@ -44,7 +44,7 @@ router.post('/', async (req, res)=>{
 			hostId 	   : req.body.hostId,
 			userId 	   : req.cookies.username
 		};
-		var messageContent = 'New booking confirmed! | Property ID: '+req.body.propertyId+ ' | Start Date: '+req.body.startDate+' | End Date: '+req.body.endDate+' | Total Amount: '+req.body.totalAmount+' | User ID: '+req.cookies.username;
+		var messageContent = 'New booking confirmed! | Property ID: '+req.body.propertyId+ ' | Start Date: '+req.body.startDate+' | End Date: '+req.body.endDate+' | Total Amount: $'+req.body.totalAmount+' | User ID: '+req.cookies.username;
 		message = {
 			receiver : req.body.hostId,
 			content  : messageContent,

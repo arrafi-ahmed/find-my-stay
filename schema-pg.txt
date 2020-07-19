@@ -47,7 +47,7 @@ CREATE TABLE property (
       address varchar(200) NOT NULL,
       city varchar(50) NOT NULL,
       country varchar(50) NOT NULL,
-      rating float DEFAULT NULL,
+      rating numeric(3,2) DEFAULT NULL,
       rating_count int DEFAULT NULL,
       details text NOT NULL,
       promote_status smallint NOT NULL,

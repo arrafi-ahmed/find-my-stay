@@ -6,6 +6,7 @@ const hostModel		= require.main.require('./models/host-model');
 const bookingsModel	= require.main.require('./models/bookings-model');
 const invoiceModel	= require.main.require('./models/invoice-model');
 const propertyModel	= require.main.require('./models/property-model');
+const reviewModel	= require.main.require('./models/review-model');
 var { check, validationResult } = require('express-validator');
 
 router.get('*', (req, res, next) => {
@@ -124,7 +125,7 @@ router.get('/:id/data', async (req, res) => {
 		const getStatRecievedBook = await bookingsModel.getStatRecievedBook(req.cookies.username);
 		const getStatApprovedBook = await bookingsModel.getStatApprovedBook(req.cookies.username);
 		const getStatPaidBook = await bookingsModel.getStatPaidBook(req.cookies.username);
-		const getStatReview = await bookingsModel.getStatReview(req.cookies.username);
+		const getStatReview = await reviewModel.getStatReview(req.cookies.username);
 		const getStatProp = await propertyModel.getStatProp(req.cookies.username);
 		const getStatEarn = await invoiceModel.getStatEarn(req.cookies.username);
 
@@ -132,7 +133,7 @@ router.get('/:id/data', async (req, res) => {
 			recievedBook: getStatRecievedBook.book,
 			approvedBook: getStatApprovedBook.book,
 			paidBook: getStatPaidBook.book,
-			review: getStatReview.book,
+			review: getStatReview.rid,
 			prop: getStatProp.prop,
 			earn: getStatEarn.earn
 		};

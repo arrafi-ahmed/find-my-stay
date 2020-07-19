@@ -135,7 +135,7 @@ module.exports ={
 	},
 	getStatApprovedBook: (hostId)=>{
 		return new Promise((resolve, reject)=>{
-			var sql = "SELECT count(id) book from bookings where status = 1 and host_id = $1;";
+			var sql = "SELECT count(id) book from bookings where (status = 1 or status = 4) and host_id = $1;";
 			db.getResult(sql, [hostId], (result)=>{
 				if(result.length > 0){
 					resolve(result[0]);
@@ -146,18 +146,6 @@ module.exports ={
 		});
 	},
 	getStatPaidBook: (hostId)=>{
-		return new Promise((resolve, reject)=>{
-			var sql = "SELECT count(id) book from bookings where status = 0 and host_id = $1;";
-			db.getResult(sql, [hostId], (result)=>{
-				if(result.length > 0){
-					resolve(result[0]);
-				}else{
-					resolve(null);
-				}
-			});
-		});
-	},
-	getStatReview: (hostId)=>{
 		return new Promise((resolve, reject)=>{
 			var sql = "SELECT count(id) book from bookings where status = 2 and host_id = $1;";
 			db.getResult(sql, [hostId], (result)=>{

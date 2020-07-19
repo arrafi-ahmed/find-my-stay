@@ -41,16 +41,16 @@
                                                         <span class="icon-close2"></span>
                                                     </button> 
                                                 </span>
+                                                <span class=" d-block d-xl-inline-block" data-toggle="tooltip" data-placement="bottom" title="Invoice - allowed once if status approved!" tabindex="0">
+                                                    <button class="btn btn-warning d-block d-xl-inline-block" name="invoice" value="invoice" type="submit" <%= booking.status != 1 ? 'style=pointer-events:none; disabled' : '' %>>
+                                                        <span class="icon-file-o"></span>
+                                                    </button>
+                                                </span> 
                                                 <span class=" d-block d-xl-inline-block" data-toggle="tooltip" data-placement="bottom" title="Paid - if status approved!" tabindex="0">
                                                     <button class="btn btn-dark d-block d-xl-inline-block" name="paid" value="paid" type="submit" <%= status != 'Approved' ? 'style=pointer-events:none; disabled' : '' %>>
                                                         <span class="icon-dollar"></span>
                                                     </button>
                                                 </span>
-                                                <span class=" d-block d-xl-inline-block" data-toggle="tooltip" data-placement="bottom" title="Invoice - allowed once if status approved!" tabindex="0">
-                                                    <button class="btn btn-warning d-block d-xl-inline-block" name="invoice" value="invoice" type="submit" <%= booking.status != 1 ? 'style=pointer-events:none; disabled' : '' %>>
-                                                        <span class="icon-file-o"></span>
-                                                    </button>
-                                                </span>                                                                                                
                                             </form>
                                         </div>
                                     </td>

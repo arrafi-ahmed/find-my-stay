@@ -3,7 +3,7 @@ var db = require('./db');
 module.exports ={
 	getPropertyById: (propertyId)=>{
 		return new Promise((resolve, reject)=>{
-			var sql = "select * from property where id=$1";
+			var sql = "select ROUND(rating, 2) rrating, * from property where id=$1";
 			db.getResult(sql, [propertyId], (result)=>{
 				if(result.length > 0){
 					resolve(result[0]);

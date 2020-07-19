@@ -60,5 +60,17 @@ module.exports ={
 				}
 			});
 		});
-	}
+	},
+	getStatReview: (hostId)=>{
+		return new Promise((resolve, reject)=>{
+			var sql = "select count(r.id) rid from review r, property p where r.property_id = p.id and p.host_id = $1";
+			db.getResult(sql, [hostId], (result)=>{
+				if(result.length > 0){
+					resolve(result[0]);
+				}else{
+					resolve(null);
+				}
+			});
+		});
+	},	
 }
