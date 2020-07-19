@@ -159,14 +159,14 @@
 
                                 <div class="row d-block d-md-none">
                                     <div class="col-sm-12">
-                                        <p class="h6">
+                                        <p class="lead">
                                             <%= testimonial.name %>
                                             <span class="inline-dot" area-hidden="true">.</span>
                                             <%= testimonial.city +', '+ testimonial.country; %>
                                         </p>
                                         <span> 
                                             <span class="inline-dot" area-hidden="true">.</span>
-                                            <p><%= testimonial.details.substr(0,300); %> ...</p>
+                                            <%= testimonial.details.substr(0,300); %> ...
                                         </span><br>
                                         <span>
                                             &mdash; <em><%= testimonial.user_id; %></em>
