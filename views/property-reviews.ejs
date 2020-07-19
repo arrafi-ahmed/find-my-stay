@@ -7,8 +7,8 @@
                         <div class="row">
                             <div class="col-lg-9 col-md-12 order-lg-1 order-2">
                                 <h2 class="pb-3 bb">
-                                    <span class="icon-star"></span>&nbsp;<span class="inline-small"><b><%= property.rating != null ? property.rating : "N/A"; %></b></span>
-                                    <span class="inline-small"><%= property.rating != null ? "(" + property.rating_count + " reviews)" : ""; %></span>
+                                    <span class="icon-star"></span>&nbsp;<span class="inline-small"><b><%= property.rrating != null ? property.rrating : "N/A"; %></b></span>
+                                    <span class="inline-small"><%= property.rrating != null ? "(" + property.rating_count + " reviews)" : ""; %></span>
                                 </h2>
                                 
                                 <% if(typeof reviews !== 'undefined' && reviews !== null){ %>

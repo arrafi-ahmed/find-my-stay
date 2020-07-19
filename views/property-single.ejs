@@ -8,7 +8,7 @@
 						<span class="inline-small"><b>$<%= property.price %></b> / night</span>
 						<span class="inline-dot" area-hidden="true">.</span>
 						<span class="icon-star"></span>
-						<span class="inline-small"> <b><%= property.rating != null ? property.rating : 'No reviews' %></b>&nbsp;<%= property.rating_count != null ? '(' + property.rating_count + ')' : '' %></span>
+						<span class="inline-small"> <b><%= property.rrating != null ? property.rrating : 'No reviews' %></b>&nbsp;<%= property.rrating != null ? '(' + property.rating_count + ')' : '' %></span>
 						<span class="inline-dot" area-hidden="true">.</span>
 						<span class="inline-small"><b><%= property.type == 0 ? 'Entire Place' : 'Private Room'; %></b></span>
 						<span class="inline-dot" area-hidden="true">.</span>
@@ -105,7 +105,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h4 class="pb-4"><span class="icon-star"></span>&nbsp;<%= property.rating != null ? property.rating : '0' %> (<%= property.rating_count != null ? property.rating_count : '0' %> reviews)</h4>
+						<h4 class="pb-4"><span class="icon-star"></span>&nbsp;<%= property.rrating != null ? property.rrating : '0' %> (<%= property.rating_count != null ? property.rating_count : '0' %> reviews)</h4>
 						
 						<% if(typeof reviews !== 'undefined' && reviews !== null){ %>
 						<div class="row">
@@ -122,7 +122,7 @@
 										</span>
 										<small><%= review.rdate %></small>
 										<span class="inline-dot">.</span>
-										<b><span class="icon-star"></span> <%= review.rrating %></b>
+										<b><span class="icon-star"></span> <%= review.rating4 %></b>
 									</div>
 								</div>
 								<p><%= review.details.substr(0,300); %> ... </p>

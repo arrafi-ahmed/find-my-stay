@@ -27,7 +27,7 @@ module.exports ={
 	},
 	get4ReviewsByProperty: (id)=>{
 		return new Promise((resolve, reject)=>{
-			var sql = "SELECT distinct r.user_id, TO_CHAR(date :: DATE, 'YYYY-MM-DD') rdate, r.id rid, r.rating rrating, r.*, u.first_name, u.last_name, u.country, u.profile_photo FROM review r, users u WHERE r.user_id = u.id and r.property_id = $1 order by rid desc limit 4;";
+			var sql = "SELECT distinct r.user_id, TO_CHAR(date :: DATE, 'YYYY-MM-DD') rdate, r.id rid, r.rating rating4, r.*, u.first_name, u.last_name, u.country, u.profile_photo FROM review r, users u WHERE r.user_id = u.id and r.property_id = $1 order by rid desc limit 4;";
 			db.getResult(sql, [id], (results)=>{
 				if(results.length > 0){
 					resolve(results);
