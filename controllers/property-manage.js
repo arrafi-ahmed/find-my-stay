@@ -55,7 +55,7 @@ router.post('/add',
 			country: req.body.country,
 			description: req.body.description,
 			price: parseInt(req.body.price),
-			type: parseInt(req.body.type),
+			type: req.body.type,
 			propertyPhotos: [],
 			hostId: req.cookies.username
 		}

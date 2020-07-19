@@ -18,12 +18,12 @@
                                 <label for="exampleInputEmail1">Type</label>
                                 <div class="dropdown">
                                     <select class="custom-select" name="type">
-                                        <% if(property.type == 1) { %>
-                                            <option value="1" selected>Entire place</option>
-                                            <option value="2" >Private room</option>
+                                        <% if(property.type == 0) { %>
+                                            <option value="0" selected>Entire place</option>
+                                            <option value="1" >Private room</option>
                                         <% }else{ %>
-                                            <option value="1" >Entire place</option>
-                                            <option value="2" selected>Private room</option>
+                                            <option value="0" >Entire place</option>
+                                            <option value="1" selected>Private room</option>
                                         <% } %>
                                     </select>
                                 </div>

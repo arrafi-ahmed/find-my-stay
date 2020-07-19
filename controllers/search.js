@@ -35,11 +35,12 @@ router.get('/',
 			type : []
 		}
 		if (req.query.type == "both") {
-			query.type.push(0); query.type.push(1);
+			query.type.push('0'); 
+			query.type.push('1');
 		}else if (req.query.type == "entire-place"){
-			query.type.push(0);
+			query.type.push('0');
 		}else{
-			query.type.push(1);
+			query.type.push('1');
 		}
 		const searchBooking = await bookingsModel.searchBooking(query);
 		res.render('search', {propertyList:searchBooking, query:query, title:'Search'});
@@ -54,9 +55,6 @@ router.get('/type/:type', async (req, res)=>{
 	const today = date.toISOString().slice(0, 10);
 	const tomorrow = new Date(date.setDate(date.getDate() + 1)).toISOString().slice(0,10);
 	
-	console.log(new Date(Date.now() - 1000*86400).toDateString());
-	console.log(today);
-	console.log(tomorrow);
 	res.redirect('/search?location='+city+'&checkin='+today+'&checkout='+tomorrow+'&type='+req.params.type);	
 });
 

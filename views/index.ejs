@@ -14,7 +14,7 @@
                         <div class="col-md-9 col-sm-7">
                             <div class="pl-1">
                                 <b><%= property[0].name; %></b><br>
-                                <span class="inline-small"> <%= property[0].type==1 ? "Entire Place" : "Private Room"; %></span>
+                                <span class="inline-small"> <%= property[0].type == 0 ? "Entire Place" : "Private Room"; %></span>
                                 <span class="inline-dot" area-hidden="true">.</span>
                                 <span class="inline-small"><%= property[0].city; %>, <%= property[0].country; %></span><br>
                                 <span class="inline-small"><b>$<%= property[0].price; %></b> / night </span>
