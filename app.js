@@ -41,6 +41,7 @@ app.set('layout', 'partials/master');
 //middlewares
 app.locals.siteName = 'FindMyStay';
 app.use(express.static(path.join(__dirname, '/public')));
+app.use('/favicon.ico', express.static(path.join(__dirname, '/public/images/favicon.ico')''));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({name: 'session', keys: ['dGse349@4iB!k34', 'jsfWd346Gdl$!fl6']}));
