@@ -4,7 +4,7 @@ module.exports ={
 	getPropertyById: (propertyId)=>{
 		return new Promise((resolve, reject)=>{
 			var sql = "select ROUND(rating, 2) rrating, * from property where id=$1";
-			db.getResult(sql, [propertyId], (result)=>{
+			db.getResult(sql, [propertyId], (result)=>{console.log(result);
 				if(result.length > 0){
 					resolve(result[0]);
 				}else{
