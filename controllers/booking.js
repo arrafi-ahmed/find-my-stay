@@ -14,7 +14,7 @@ router.get('/', async (req, res)=>{
 		req.session.message = {type:'error', error:'Hosts are not allowed to book property!'};
 		res.redirect('/property/' + req.query.propertyId);
 	}
-	else if(req.query.propertyId == req.session.check.propertyId && req.query.checkin == req.session.check.checkin && req.query.checkout == req.session.check.checkout) {
+	else if(req.session.check != null && req.query.propertyId == req.session.check.propertyId && req.query.checkin == req.session.check.checkin && req.query.checkout == req.session.check.checkout) {
 		const getPropertyById = await propertyModel.getPropertyById(req.query.propertyId);
 
 		const date1 = new Date(req.query.checkin);
