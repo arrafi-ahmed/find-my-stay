@@ -123,7 +123,7 @@ router.post('/:id/edit',
 router.get('/:id/data', async (req, res) => {
 	if (req.params.id == req.cookies.username) {
 		const getStatRecievedBook = await bookingsModel.getStatRecievedBook(req.cookies.username);
-		const getStatApprovedBook = await bookingsModel.getStatApprovedBook(req.cookies.username);
+		const getStatPendingBook = await bookingsModel.getStatPendingBook(req.cookies.username);
 		const getStatPaidBook = await bookingsModel.getStatPaidBook(req.cookies.username);
 		const getStatReview = await reviewModel.getStatReview(req.cookies.username);
 		const getStatProp = await propertyModel.getStatProp(req.cookies.username);
@@ -131,7 +131,7 @@ router.get('/:id/data', async (req, res) => {
 
 		getStat = {
 			recievedBook: getStatRecievedBook.book,
-			approvedBook: getStatApprovedBook.book,
+			pendingBook: getStatPendingBook.book,
 			paidBook: getStatPaidBook.book,
 			review: getStatReview.rid,
 			prop: getStatProp.prop,
